@@ -21,6 +21,7 @@ app.use(cors());
 
 //Routes
 app.use('/api', skillRoutes);
+app.use('/api', employeeRoutes);
 
 const PORT = process.env.PORT || 3000;
 
