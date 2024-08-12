@@ -46,14 +46,17 @@ const all_emp_all_skills_get = async (req,res) => {
     }
 }
 
-//return 
+//return all Skills for a Single employee
 const single_employee_all_skills_get = async (req,res) => {
+
     try {
+        //find all the skills for this employee from the relation table
         const this_emp_skills = (await Employee_Skill.find({employee: req.params.id})).map(item => item.skill);
 
         if(!Array.isArray(this_emp_skills) || this_emp_skills.length===0)
             return res.status(404).json({message:"No Skills Found for this Employee"});
 
+        //find the full Data for each of those skills
         const fullSkillList = await Skill.find({
             _id:{$in: this_emp_skills}
         })
