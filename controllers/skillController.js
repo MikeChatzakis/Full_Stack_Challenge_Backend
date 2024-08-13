@@ -1,6 +1,5 @@
 const Skill = require('../models/skill');
 
-
 //should make a handle error function
 
 

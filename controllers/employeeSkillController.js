@@ -26,8 +26,6 @@ const create_many_skills_post = async (req, res) => {
             skill: skill
         }));
         
-        console.log(elementsToAdd);
-
         await Employee_Skill.insertMany(elementsToAdd);
 
         res.status(201).json({message: 'Added succesfully'});
@@ -68,13 +66,28 @@ const single_employee_all_skills_get = async (req,res) => {
 }
 
 //delete a skill form the DB
-const emp_skill_delete = async (req,res) => {
+const delete_entries_when_employee_is_deleted = async (req,res) => {
     try {
-        await Skill.findByIdAndDelete(req.params.id);
-        res.status(200).json();
+        console.log("deleting many skill delete");
+        await Employee_Skill.deleteMany({employee:req.params.id});
+        console.log("deleted");
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        throw new Error(`Error deleting employee skills: ${err.message}`);
+    }
+}
+const delete_entries_when_skill_is_deleted = async (req,res) => {
+    try {
+        console.log("deleting many skill delete");
+        await Employee_Skill.deleteMany({skill:req.params.id});
+        console.log("deleted");
+
+    } catch (err) {
+        throw new Error(`Error deleting employee skills: ${err.message}`);
     }
 }
 
-module.exports = { create_emp_skill_post, create_many_skills_post, all_emp_all_skills_get, single_employee_all_skills_get, emp_skill_delete};
+
+
+
+
+module.exports = { create_emp_skill_post, create_many_skills_post, all_emp_all_skills_get, single_employee_all_skills_get,delete_entries_when_employee_is_deleted,delete_entries_when_skill_is_deleted};
