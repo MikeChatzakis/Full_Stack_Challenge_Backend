@@ -65,29 +65,34 @@ const single_employee_all_skills_get = async (req,res) => {
     }
 }
 
-//delete a skill form the DB
+//when employee is deleted, also delete associated entries. This is triggered by a middleware
 const delete_entries_when_employee_is_deleted = async (req,res) => {
     try {
-        console.log("deleting many skill delete");
         await Employee_Skill.deleteMany({employee:req.params.id});
-        console.log("deleted");
     } catch (err) {
         throw new Error(`Error deleting employee skills: ${err.message}`);
     }
 }
+// when skill is deleted, also delete associated entries. This is triggered by a middleware
 const delete_entries_when_skill_is_deleted = async (req,res) => {
     try {
-        console.log("deleting many skill delete");
         await Employee_Skill.deleteMany({skill:req.params.id});
-        console.log("deleted");
-
     } catch (err) {
         throw new Error(`Error deleting employee skills: ${err.message}`);
+    }
+}
+
+const employee_skill_delete = async (req,res) => {
+    try {
+        const { emp_key, skill_key } = req.query;
+        await Employee_Skill.deleteOne({employee:emp_key, skill:skill_key});
+        res.status(200).json();
+    } catch (error) {
+        res.status(500).json({ message: err.message });
     }
 }
 
 
 
 
-
-module.exports = { create_emp_skill_post, create_many_skills_post, all_emp_all_skills_get, single_employee_all_skills_get,delete_entries_when_employee_is_deleted,delete_entries_when_skill_is_deleted};
+module.exports = { create_emp_skill_post, create_many_skills_post, all_emp_all_skills_get, single_employee_all_skills_get,delete_entries_when_employee_is_deleted,delete_entries_when_skill_is_deleted,employee_skill_delete};
