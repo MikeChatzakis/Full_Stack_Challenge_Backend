@@ -1,5 +1,5 @@
 const Skill = require('../models/skill');
-
+const ExcelJS = require('exceljs');
 
 //should make a handle error function
 
@@ -58,5 +58,53 @@ const skill_update_put = async (req,res) => {
     }
 }
 
-module.exports = { create_skill_post, all_skills_get, single_skill_get, skill_delete, skill_update_put};
+const export_skills_to_excel_get = async (req, res) => {
+    try {
+        // Fetch data from the database
+        const skills = await Skill.find().lean(); // Using lean() for plain JavaScript objects
+
+        // Create a new Excel workbook and add a worksheet
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Skills');
+
+        // Define the columns
+        worksheet.columns = [
+            { header: 'Skill Name', key: 'name', width: 20 },
+            { header: 'Skill details', key: 'details', width: 20 },
+            { header: 'Created At', key: 'createdAt', width: 20 },
+            { header: 'Updated At', key: 'updatedAt', width: 20 }
+        ];
+
+        // Add rows to the worksheet
+        skills.forEach(skill => {
+            worksheet.addRow({
+                name: skill.name,
+                details: skill.details,
+                createdAt: skill.createdAt ? skill.createdAt.toLocaleDateString('el-GR') : '',
+                updatedAt: skill.updatedAt ? skill.updatedAt.toLocaleDateString('el-GR') : ''
+            });
+        });
+
+        // Set the response headers to trigger a download
+        res.setHeader(
+            'Content-Type',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        );
+        res.setHeader(
+            'Content-Disposition',
+            'attachment; filename=' + 'skills.xlsx'
+        );
+
+        //res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Expose-Headers', 'Content-Disposition');
+        // Write the workbook to the response
+        await workbook.xlsx.write(res);
+        res.end();
+    } catch (error) {
+        res.status(500).send('Error generating Excel file');
+        console.error(error);
+    }
+}
+
+module.exports = { create_skill_post, all_skills_get, single_skill_get, skill_delete, skill_update_put,export_skills_to_excel_get};
 
