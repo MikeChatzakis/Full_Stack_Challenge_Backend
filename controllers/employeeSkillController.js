@@ -22,13 +22,18 @@ const create_many_skills_post = async (req, res) => {
     const {newUserID, EmployeeSkills} = req.body;
 
     try{
-        const elementsToAdd = EmployeeSkills.map(skill => ({
-            employee: newUserID,
-            skill: skill
-        }));
-        
-        const added_elements=await Employee_Skill.insertMany(elementsToAdd);
-        logger.info(`Employee-Skill relations Added: ${JSON.stringify(added_elements)}`);
+        if(EmployeeSkills.length===0){
+            console.log("Nothing to add");
+        }
+        else{
+            const elementsToAdd = EmployeeSkills.map(skill => ({
+                employee: newUserID,
+                skill: skill
+            }));
+            
+            const added_elements=await Employee_Skill.insertMany(elementsToAdd);
+            logger.info(`Employee-Skill relations Added: ${JSON.stringify(added_elements)}`);
+        }
         res.status(201).json({message: 'Added succesfully'});
     } catch(err){
         res.status(500).json({message: err.message});
@@ -59,8 +64,6 @@ const single_employee_all_skills_get = async (req,res) => {
         let fullSkillList = await Skill.find({
             _id:{$in: this_emp_skills.map(item => item.skill)}
         })
-        //console.log(fullSkillList);
-        console.log(this_emp_skills);
         fullSkillList = fullSkillList.map(skill => {
             const matchingSkill = this_emp_skills.find(empSkill => empSkill.skill.toString() === skill._id.toString());
             return{
@@ -68,7 +71,6 @@ const single_employee_all_skills_get = async (req,res) => {
                 dateAdded: matchingSkill ? matchingSkill.obtainedAt : null
             }
         })        
-        console.log(fullSkillList);
         res.status(200).json(fullSkillList);
     } catch (err) {
         res.status(500).json({ message: err.message });
