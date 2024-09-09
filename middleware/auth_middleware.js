@@ -5,8 +5,6 @@ const jwtSecret=process.env.JWT_SECRET;
 
 const requireAuth = (req,res,next) =>{
     const token = req.cookies._auth;
-    console.log(token);
-
     if(!token){
         return res.status(401).json({ message: 'Not authorized, please log in', redirect: true });
     }

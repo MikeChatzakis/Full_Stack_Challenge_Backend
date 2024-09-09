@@ -8,7 +8,6 @@ const maxAge=3*24*60*60;
 
 //handle errors
 const handle_errors = (err) =>{
-    //console.log("In handle_errros:",err.message,err.code);
     let errors = {email:'', password:''};
 
     //signup - duplicate email
@@ -62,7 +61,6 @@ const register_admin_post = async (req, res) =>{
 //collect input data from user and log in if a 'user' exists in our database with given credentials
 const login_admin_post = async (req, res) =>{
     const {email, password} = req.body;
-    console.log('email:'+email+' password:'+password);
     try {
         const admin = await Admin.login(email,password);
         const token = createToken(admin._id);

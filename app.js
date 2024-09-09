@@ -27,8 +27,8 @@ connectDB();
 //Middleware
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000',
-    credentials: true, //need this to be able to send cookies(res.cookie). At the moment I am sending the token over the response body so this is not required, but could potentially be usedful
+    origin: ['http://localhost:3000'],//can add more IPs if I am going to run the front-end server on other devices
+    credentials: true //need this to be able to send cookies(res.cookie). At the moment I am sending the token over the response body so this is not required, but could potentially be usedful
 }));
 
 app.use(cookieParser()); //also not needed for the same reason as above, but is needed if sending cookies in res.cookie
