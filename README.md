@@ -14,6 +14,7 @@ You will need a MongoDB database for this to connect and save Data.
 You also need to create a .env file and place you credentials in there. I have a dummy one which you will need to change.
 
 ## 
+## How to Run:
 
 Dont forget to install node-modules
 
@@ -30,9 +31,9 @@ Runs the app in the development mode, with nodemon.
 Runs the app.
 
 ##
-
 ## Usage
 
+## Geneal
 There are 4 data Types:
 
 1. Skills
@@ -45,6 +46,7 @@ Relations in pretty much a many-many array where an id for 1 employee and 1 skil
 
 ## Middleware
 There are middleware to:
+
 1.Check authentication before continueing to a fetch request.
 2. Hash authentication password before register/login.
 3. Delete relations when an employee or skill is deleted.
