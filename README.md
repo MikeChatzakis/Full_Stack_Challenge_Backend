@@ -53,6 +53,7 @@ There are middleware to:
 
 ### !Note:
 You need to add your frontend Ip to to cors setup. This can be found in app.js 
+```javascript
 app.use(cors({
     origin: ['http://localhost:3000'], <-- Change/Add to this
     credentials: true 
