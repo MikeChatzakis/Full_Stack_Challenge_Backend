@@ -19,9 +19,6 @@ Dont forget to install node-modules
 
 ### `npm install`
 
-
-##
-
 In the project directory, you can run:
 
 ### `npm run dev`
@@ -31,6 +28,8 @@ Runs the app in the development mode, with nodemon.
 ### `npm run start`
 
 Runs the app.
+
+##
 
 ## Usage
 
@@ -44,20 +43,20 @@ There are 4 data Types:
 Admins are only used for authentication. 
 Relations in pretty much a many-many array where an id for 1 employee and 1 skill is stored, indicating a relation between them.
 
-##Middleware
+## Middleware
 There are middleware to:
 1.Check authentication before continueing to a fetch request.
 2. Hash authentication password before register/login.
 3. Delete relations when an employee or skill is deleted.
 
-###!Note:
+### !Note:
 You need to add your frontend Ip to to cors setup. This can be found in app.js 
 app.use(cors({
     origin: ['http://localhost:3000'], <-- Change/Add to this
     credentials: true 
 }));
 
-##Logging:
+## Logging:
 When you run a database.log file will be created in the directory of the project. This contains log information based on what actions are performed.
 Its not complete and needs a log of refinement but, at the time, provides basic information.
 
