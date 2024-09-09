@@ -58,6 +58,8 @@ app.use(cors({
     origin: ['http://localhost:3000'], <-- Change/Add to this
     credentials: true 
 }));
+```
+
 
 ## Logging:
 When you run a database.log file will be created in the directory of the project. This contains log information based on what actions are performed.
