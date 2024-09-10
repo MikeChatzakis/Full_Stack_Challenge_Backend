@@ -3,11 +3,12 @@ const { create_emp_skill_post, create_many_skills_post, all_emp_all_skills_get, 
 
 const router = express.Router();
 
-router.post('/addEmpSkill', create_emp_skill_post);
-router.post('/addManyEmpSkills', create_many_skills_post);
-router.get('/AllEmployeesAllSkills', all_emp_all_skills_get);
-router.get('/SingleEmployeeAllSkills/:id', single_employee_all_skills_get);
-router.get('/EmpSkillExcel', export_emp_skill_relations_to_excel_get);
-router.delete('/EmployeeSkillDelete', employee_skill_delete);
+
+router.post('/employee-skills/bulk', create_many_skills_post);
+router.get('/employee-skills/export', export_emp_skill_relations_to_excel_get);
+router.delete('/employee-skills/:employeeId/:skillId', employee_skill_delete); // employee and skill id are passed as props in the link
+router.get('/employee-skills/:id', single_employee_all_skills_get);
+router.get('/employee-skills', all_emp_all_skills_get);
+router.post('/employee-skills', create_emp_skill_post);
 
 module.exports = router;

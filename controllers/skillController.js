@@ -62,7 +62,6 @@ const export_skills_to_excel_get = async (req, res) => {
     try {
         // Fetch data from the database
         const skills = await Skill.find().lean(); // Using lean() for plain JavaScript objects
-
         // Create a new Excel workbook and add a worksheet
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Skills');

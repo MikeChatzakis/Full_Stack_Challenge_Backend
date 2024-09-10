@@ -58,7 +58,6 @@ const export_employees_to_excel_get = async (req, res) => {
     try {
         // Fetch data from the database
         const employees = await Employee.find().lean(); // Using lean() for plain JavaScript objects
-
         // Create a new Excel workbook and add a worksheet
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Employees');

@@ -4,11 +4,13 @@ const Schema = mongoose.Schema;
 const employee_skillScema = new mongoose.Schema({
     employee:{
         type: Schema.Types.ObjectId, 
-        ref:'Employee'
+        ref:'Employee',
+        required: true
     },
     skill:{
-        type: Schema.Types.ObjectId, 
-        ref:'Skill'
+        type: Schema.Types.ObjectId,
+        ref:'Skill',
+        required: true,
     },
     createdAt: { 
         type: Date,

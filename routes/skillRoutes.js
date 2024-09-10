@@ -4,11 +4,12 @@ const {delete_relations_skill} = require ('../middleware/trigger_after_delete');
 
 const router = express.Router();
 
-router.post('/addSkill', create_skill_post);
-router.get('/Skills_list', all_skills_get);
-router.get('/skill/:id', single_skill_get);
-router.get('/skill_excel', export_skills_to_excel_get);
-router.delete('/skill/:id',delete_relations_skill, skill_delete);
-router.patch('/skill/:id', skill_update_put);
+router.get('/skills/export', export_skills_to_excel_get);
+router.get('/skills/:id', single_skill_get);
+router.delete('/skills/:id',delete_relations_skill, skill_delete);
+router.patch('/skills/:id', skill_update_put);
+router.get('/skills', all_skills_get);
+router.post('/skills', create_skill_post);
+
 
 module.exports = router;

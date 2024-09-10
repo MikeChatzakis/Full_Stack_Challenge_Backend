@@ -98,8 +98,7 @@ const delete_entries_when_skill_is_deleted = async (req,res) => {
 
 const employee_skill_delete = async (req,res) => {
     try {
-        const { emp_key, skill_key } = req.query;
-        const removed_elements = await Employee_Skill.findOneAndDelete({employee:emp_key, skill:skill_key});
+        const removed_elements = await Employee_Skill.findOneAndDelete({employee: req.params.employeeId, skill: req.params.skillId});
         logger.info(`Employee-Skill relations deleted: ${JSON.stringify(removed_elements)}`);
         res.status(200).json();
     } catch (error) {
@@ -111,7 +110,6 @@ const export_emp_skill_relations_to_excel_get = async (req, res) => {
     try {
         // Fetch data from the database
         const relations = await Employee_Skill.find().lean(); // Using lean() for plain JavaScript objects
-
         // Create a new Excel workbook and add a worksheet
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Relations');

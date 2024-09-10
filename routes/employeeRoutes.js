@@ -4,11 +4,11 @@ const {delete_relations_employee} = require('../middleware/trigger_after_delete'
 
 const router = express.Router();
 
-router.post('/addEmployee', create_employee_post);
-router.get('/Employees_list', all_employees_get);
-router.get('/employee/:id', single_employee_get);
-router.get('/employee_excel', export_employees_to_excel_get);
-router.delete('/employee/:id',delete_relations_employee, employee_delete);
-router.patch('/employee/:id', employee_update_put);
+router.get('/employees/export', export_employees_to_excel_get);
+router.get('/employees/:id', single_employee_get);
+router.delete('/employees/:id',delete_relations_employee, employee_delete);
+router.patch('/employees/:id', employee_update_put);
+router.get('/employees', all_employees_get);
+router.post('/employees', create_employee_post);
 
 module.exports = router;
