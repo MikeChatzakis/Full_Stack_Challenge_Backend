@@ -41,6 +41,9 @@ app.use('/api', authRoutes)
 app.use('/api', requireAuth, skillRoutes);
 app.use('/api', requireAuth, employeeRoutes);
 app.use('/api', requireAuth, employeeSkillRoutes);
+// app.use('/api', skillRoutes);
+// app.use('/api', employeeRoutes);
+// app.use('/api', employeeSkillRoutes);
 
 const PORT = process.env.PORT || 3000;
 

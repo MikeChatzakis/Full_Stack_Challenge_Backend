@@ -19,7 +19,7 @@ const skillScema = new mongoose.Schema({
         default: Date.now,
     }
 },{
-    timestamps: true // Automatically handles createdAt and updatedAt fields)
+    timestamps: true // Automatically handles createdAt and updatedAt fields
 });
 
 skillScema.post('save', function (doc) {

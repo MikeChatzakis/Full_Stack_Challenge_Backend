@@ -1,43 +1,4 @@
-const Admin=require('../models/admin');
-const jwt=require('jsonwebtoken');
-
-const jwtSecret=process.env.JWT_SECRET;
-const maxAge=3*24*60*60;
-
-//-------------------------HELPER FUNCTIONS--------------------------
-
-//handle errors
-const handle_errors = (err) =>{
-    let errors = {email:'', password:''};
-
-    //signup - duplicate email
-    if(err.code === 11000){
-        errors.email = 'that email is already registered';
-        return errors;
-    }
-
-    //signup - validation errors
-    if(err.message.includes('user validation failed')){
-        Object.values(err.errors).forEach(({properties}) =>{
-            errors[properties.path] = properties.message;
-        });
-        console.log(errors);
-    }
-
-    //login - incorrect email or password
-    if(err.message.includes('Incorrect Email') || err.message.includes('Wrong Password')){
-        errors.password = 'Email or password incorrect';
-    }
-
-    return errors;
-}
-
-//create Token for login
-const createToken = (id) =>{
-    return jwt.sign({id},jwtSecret,{
-        expiresIn: maxAge
-    });
-}
+const AuthServices = require('../services/AuthServices');
 
 //------------------------------ROUTES-------------------------------
 
@@ -45,15 +6,11 @@ const createToken = (id) =>{
 
 //collect input data from user and create a 'user' in our database with given data
 const register_admin_post = async (req, res) =>{
-    const {email, password} = req.body;
     try{
-    const admin = await Admin.create({email: email, password: password});
-    //const token = createToken(admin._id);
-    //res.cookie('jwt', token, {httpOnly: true, maxAge:maxAge*1000});
+    const admin = await AuthServices.registerAdmin(req.body);
     res.status(201).json({admin: admin._id});
-
     }catch(err){
-        const errors = handle_errors(err);
+        const errors = JSON.parse(err.message);
         res.status(400).json({errors});
     }
 }
@@ -62,13 +19,10 @@ const register_admin_post = async (req, res) =>{
 const login_admin_post = async (req, res) =>{
     const {email, password} = req.body;
     try {
-        const admin = await Admin.login(email,password);
-        const token = createToken(admin._id);
-        //res.cookie('jwt', token, {httpOnly: false, maxAge:maxAge*1000});
-        //res.cookie('jwt', token, {httpOnly: true, maxAge:maxAge*1000, secure: process.env.NODE_ENV === 'production', sameSite: 'strict'});
-        res.status(200).json({admin: admin._id, token});
+        const result = await AuthServices.loginAdmin(email,password);
+        res.status(200).json({admin:result.admin._id,token:result.token});
     } catch (err) {
-        const errors = handle_errors(err);
+        const errors = JSON.parse(err.message);
         res.status(400).json({errors});
     }
 }
