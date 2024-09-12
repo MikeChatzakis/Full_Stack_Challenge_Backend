@@ -10,7 +10,7 @@ Authentication is being done with JWT tokens and bcrypt
 
 ## ENV
 
-You will need a MongoDB database for this to connect and save Data. 
+You will need a MongoDB database for this to connect and save Data.
 You also need to create a .env file and place you credentials in there. I have a dummy one which you will need to change.
 
 ## 
